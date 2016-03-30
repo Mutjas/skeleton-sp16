@@ -18,6 +18,7 @@ public class ArrayDeque<type> {
 
 	/* add at the first of the deque. */
 	public void addFirst(type item) {
+		/* if the deque full call resize function that double the capacity of the array. */
 		if (size == items.length) {
 			resize(items.length * 2);
 		}
@@ -32,6 +33,7 @@ public class ArrayDeque<type> {
 
 	/*add at the last of the deque. */
 	public void addLast(type item) {
+		/* if the deque full call resize function that double the capacity of the array. */
 		if(size == items.length) {
 			resize(items.length * 2);
 		}
@@ -43,26 +45,28 @@ public class ArrayDeque<type> {
 		}
 		size += 1;
 	}
-
+	
+	/* remove the first item in the deque. */ 
 	public type removeFirst() {
 		if (size == 0) {
 			return null;
 		}
 		nextFirst = firstIndex();
 		size -= 1;
+		/* if the used percent of the array size is less than 25% decrease the array to the half. */
 		if (size / (double)items.length < 0.25) {
 			resize(items.length / 2);
 		}
 		return items[nextFirst];
 	}
 
+	/* remove the last item in the deque. */ 
 	public type removeLast() {
 		if (size == 0) {
 			return null;
 		}
 		nextLast = lastIndex();
-		
-		System.out.println(size / (double)items.length);
+		/* if the used percent of the array size is less than 25% decrease the array to the half. */
 		if (size / (double)items.length < 0.25) {
 			resize(items.length / 2);
 		}
@@ -70,6 +74,7 @@ public class ArrayDeque<type> {
 		return items[nextLast];
 	}
 
+	/* return true if the deque empty false otherwise. */
 	public boolean isEmpty() {
 		if (size == 0) {
 			return true;
@@ -77,10 +82,12 @@ public class ArrayDeque<type> {
 		return false;
 	}
 
+	/* return the size of the deque. */
 	public int size() {
 		return size;
 	}
 
+	/* get the the elemnt in index "index" at the deque. */
 	public type get(int index) {
 		if (index < 0 || index >= size) {
 			return null;		
@@ -93,6 +100,7 @@ public class ArrayDeque<type> {
 		return items[index];
 	}
 
+	/* print all the elemnts in the deque. */
 	public void printDeque() {
 		int index = firstIndex();
 		int lastIndex = lastIndex();
@@ -103,6 +111,7 @@ public class ArrayDeque<type> {
 		System.out.println(items[lastIndex()]);
 	}
 
+	/* helper method to retun index of the last elemnt in the deque. */
 	private int lastIndex() {
 		if (nextLast == 0) {
 			return items.length - 1;		
@@ -110,6 +119,7 @@ public class ArrayDeque<type> {
 		return nextLast - 1;
 	}
 
+	/* helper method to retun index of the first elemnt in the deque. */	
 	private int firstIndex() {
 		if (nextFirst + 1 == items.length) {
 			return 0;
@@ -117,6 +127,7 @@ public class ArrayDeque<type> {
 		return nextFirst + 1;
 	}
 
+	/* return the next index for any circular array. */
 	private int nextIndex(int index, int length) {
 		if (index + 1 == length) {
 			return 0;
@@ -124,10 +135,12 @@ public class ArrayDeque<type> {
 		return index + 1;
 	}
 
+	/*return the capacity or the size of the array not the deque. */
 	public int capacity() {
 		return items.length;
 	}
 
+	/* resize the array to new capacity. */
 	private void resize(int newSize) {
 		type[] tmp = (type[]) new Object[newSize];
 		int itemsIndex = firstIndex();
